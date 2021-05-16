@@ -11,7 +11,7 @@ module.exports = {
   async export(req) {
     const { email } = req.query;
     const template = await axios.get(
-      "https://azd-temp.s3-ap-southeast-1.amazonaws.com/data"
+      "https://tampermonkey-scripts.netlify.app/autofill"
     );
 
     const res = await strapi.services.profiles.findOne({
@@ -26,4 +26,4 @@ const generate = (
   { email, first_name, last_name, twitter, month, day, year },
   template
 ) => `${template}\nvariables,"[""email = ${email}"",""twitter = ${twitter}"",""first_name = ${first_name}"",""last_name = ${last_name}"",""name = ${first_name} ${last_name}"",""month = ${month}"",""day = ${day}"",""year = ${year}""]",,,,,
-`;
+autoimport,0,https://autofill-importer.herokuapp.com/profiles/export?email=${email},,,,`;
