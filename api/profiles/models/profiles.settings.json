@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "profiles",
   "info": {
-    "name": "Profiles"
+    "name": "Profiles",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -12,9 +13,34 @@
   "pluginOptions": {},
   "attributes": {
     "email": {
-      "type": "string",
+      "type": "email",
       "required": true,
       "unique": true
+    },
+    "first_name": {
+      "type": "string",
+      "required": true
+    },
+    "last_name": {
+      "type": "string",
+      "required": true
+    },
+    "month": {
+      "type": "string",
+      "required": true
+    },
+    "day": {
+      "type": "string",
+      "required": true
+    },
+    "year": {
+      "type": "string",
+      "required": true
+    },
+    "twitter": {
+      "type": "string",
+      "required": true,
+      "regex": "(^|[^@\\w])@(\\w{1,15})\\b"
     }
   }
 }
