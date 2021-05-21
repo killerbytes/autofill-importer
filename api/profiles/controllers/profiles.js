@@ -10,14 +10,16 @@ const { default: axios } = require("axios");
 module.exports = {
   async export(req) {
     const { email } = req.query;
+
     const template = await axios.get(
-      "https://tampermonkey-scripts.netlify.app/autofill"
+      "https://script.google.com/macros/s/AKfycbwh8rgmWyMEK-WiWaFoOQhemgydjgD8qngs0cpKl_B6MzwOppn7n3UU1OvbO1NdzvIBXw/exec"
     );
 
     const res = await strapi.services.profiles.findOne({
       email,
     });
 
+    console.log(res);
     return res ? generate(res, template.data) : "404";
   },
 };
@@ -25,5 +27,11 @@ module.exports = {
 const generate = (
   { email, first_name, last_name, twitter, month, day, year },
   template
-) => `${template}\nvariables,"[""email = ${email}"",""twitter = ${twitter}"",""first_name = ${first_name}"",""last_name = ${last_name}"",""name = ${first_name} ${last_name}"",""month = ${month}"",""day = ${day}"",""year = ${year}""]",,,,,
-autoimport,0,https://autofill-importer.herokuapp.com/profiles/export?email=${email},,,,`;
+) => {
+  let context = "";
+  for (var i in template) {
+    context += `${template[i]}\n`;
+  }
+
+  return `${context}variables,"[""email = ${email}"",""twitter = ${twitter}"",""first_name = ${first_name}"",""last_name = ${last_name}"",""name = ${first_name} ${last_name}"",""month = ${month}"",""day = ${day}"",""year = ${year}""]",,,,,\nautoimport,0,https://autofill-importer.herokuapp.com/profiles/export?email=${email},,,,`;
+};
